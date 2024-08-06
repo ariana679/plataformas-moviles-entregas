@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tablero de Puntos - DOM y JavaScript</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container my-1 my-sm-2 my-md-4 my-lg-5">
+        <h1>Tablero de Puntos</h1>
+        <div class="card">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-5">
+                        <span id="local-score" class="display-1">0</span>
+                        <p class="m-0">Local</p>
+                    </div>
+                    <div class="col-2">
+                        <span class="display-1">:</span>
+                    </div>
+                    <div class="col-5">
+                        <span id="visitor-score" class="display-1">0</span>
+                        <p class="m-0">Visitante</p>
+                    </div>
+                </div>
+
+                <hr class="hr">
+
+                <h2>Actualizar Contador</h2>
+                <div class="row">
+                    <div class="col-12 col-sm-3 my-1">
+                        <button id="increment-local" class="btn d-block w-100 btn-primary">+ Local</button>
+                    </div>
+                    <div class="col-12 col-sm-3 my-1">
+                        <button id="decrement-local" class="btn d-block w-100 btn-secondary">- Local</button>
+                    </div>
+                    <div class="col-12 col-sm-3 my-1">
+                        <button id="increment-visitor" class="btn d-block w-100 btn-primary">+ Visitante</button>
+                    </div>
+                    <div class="col-12 col-sm-3 my-1">
+                        <button id="decrement-visitor" class="btn d-block w-100 btn-secondary">- Visitante</button>
+                    </div>
+                </div>
+                
+                <div class="row mt-3">
+                    <div class="col-12 col-sm-4 my-1">
+                        <button id="swap-scores" class="btn d-block w-100 btn-warning">Intercambiar Puntajes</button>
+                    </div>
+                    <div class="col-12 col-sm-4 my-1">
+                        <button id="end-game" class="btn d-block w-100 btn-danger">Finalizar Partido</button>
+                    </div>
+                    <div class="col-12 col-sm-4 my-1">
+                        <button id="reset-game" class="btn d-block w-100 btn-success">Reiniciar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript para manejar los botones y la lógica de puntaje
+        let localScore = 0;
+        let visitorScore = 0;
+
+        const localScoreElement = document.getElementById('local-score');
+        const visitorScoreElement = document.getElementById('visitor-score');
+
+        document.getElementById('increment-local').addEventListener('click', () => {
+            localScore++;
+            updateScores();
+        });
+
+        document.getElementById('decrement-local').addEventListener('click', () => {
+            if (localScore > 0) {
+                localScore--;
+                updateScores();
+            }
+        });
+
+        document.getElementById('increment-visitor').addEventListener('click', () => {
+            visitorScore++;
+            updateScores();
+        });
+
+        document.getElementById('decrement-visitor').addEventListener('click', () => {
+            if (visitorScore > 0) {
+                visitorScore--;
+                updateScores();
+            }
+        });
+
+        document.getElementById('swap-scores').addEventListener('click', () => {
+            [localScore, visitorScore] = [visitorScore, localScore];
+            updateScores();
+        });
+
+        document.getElementById('end-game').addEventListener('click', () => {
+            disableButtons(true);
+        });
+
+        document.getElementById('reset-game').addEventListener('click', () => {
+            localScore = 0;
+            visitorScore = 0;
+            updateScores();
+            disableButtons(false);
+        });
+
+        function updateScores() {
+            localScoreElement.textContent = localScore;
+            visitorScoreElement.textContent = visitorScore;
+        }
+
+        function disableButtons(disable) {
+            document.getElementById('increment-local').disabled = disable;
+            document.getElementById('decrement-local').disabled = disable;
+            document.getElementById('increment-visitor').disabled = disable;
+            document.getElementById('decrement-visitor').disabled = disable;
+        }
+    </script>
+</body>
+</html>
